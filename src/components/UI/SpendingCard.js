@@ -7,14 +7,11 @@ const SpendingCard = (props) => {
     <Card className='card text-center rounded'>
         <Card.Body>
             <Card.Title>{props.title}</Card.Title>
-            <Card.Text>
-                <div>{props.description}</div>
-                <div>{props.amount}</div>
-                <div>{props.spendingDate}</div>
-            </Card.Text>
+            <div>{props.description}</div>
+            <div>{props.amount}</div>
+            <div>{props.spendingDate}</div>
             <Stack direction='horizontal' className='mt-4 justify-content-center' gap= "2">
-                <Button variant='outline-primary' className='mc-auto'>Edit</Button>
-                <Button variant='outline-danger' className='mc-auto'>Delete</Button>
+                <Button variant='outline-primary' className='btn-sm btn-block'>Edit</Button>
             </Stack>
         </Card.Body>
     </Card>
