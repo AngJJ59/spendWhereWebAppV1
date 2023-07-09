@@ -1,48 +1,35 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
+
+import { Button, Stack } from "react-bootstrap";
+import Container from 'react-bootstrap/Container'
+import OverviewCard from "./components/UI/OverviewCard";
+import SpendingCard from "./components/UI/SpendingCard";
 
 function App() {
- const [spendingItems, setSpendingItems] = useState('')
-
-  useEffect(()=> {
-    retrieveSpendingItems()
-  }, [])
-
- const retrieveSpendingItems = async () => {
-    try {
-      const response = await fetch('http://localhost:5001/api/allItems')
-      const data = await response.json()
-
-      console.log(data)
-
-      setSpendingItems(data)
-
-    } catch(err) {
-      console.log(err.message)
-    }
- }
 
   return (
-    <div>
-      <h1>Your Spending Items</h1>
-      <div className="spendingItems">
-        {spendingItems.length > 0 ? spendingItems.map(spendingItem => (
-            <div className={
-              "spendingItem" + (spendingItem.complete ? " is-complete" : "")
-            } key={spendingItem._id}>
-              <div className="checkbox"></div>
-
-              <div className="text">{spendingItem.title}</div>
-              <div className="text">{spendingItem.description}</div>
-              <div className="text">{spendingItem.amount}</div>
-              <div className="text">{spendingItem.spendingDate}</div>
-
-              <div className="delete-spendingItem">x</div>
-            </div>
-          )) : (
-            <p>You currently have no tasks</p>
-          )}
+    <Container className="">
+      <Stack direction="horizontal" gap="2" className="mb-4">
+        <h1 className="me-auto">SpendWhere</h1>
+        <Button variant="primary">Add Spending Item</Button>
+      </Stack>
+      <OverviewCard/>
+      <div className= "mt-4" style={{display:"grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: "1rem", alignItems: "flex-start"}}>
+        <SpendingCard 
+          title="buy things"
+          description = "grocery"
+          amount = "20.3"
+          spendingDate= "2023-1-1"
+        />
+        <SpendingCard 
+          title="buy things"
+          description = "grocery"
+          amount = "20.3"
+          spendingDate= "2023-1-1"
+        />
       </div>
-    </div>
+      
+    </Container>
   );
 }
 
