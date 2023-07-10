@@ -24,24 +24,38 @@ function App() {
     }
   }
 
+
+
   const deleteSpendingItemHandler = async (itemId) => {
     try {
-        fetch(`http://localhost:5001/api/delete/${itemId}`, {
-          method: 'DELETE'
-        })
+      const response = await fetch(`http://localhost:5001/api/spendingItem/delete/${itemId}`, {
+        method: 'DELETE'
+      })      
+      
+      if (!response.ok) {
+        throw new Error('Failed to delete item');
+      }
 
-        console.log('item deleted')
-    } catch(err) {
-      console.log(err.message)
+      // update the ui 
+      setSpendingItems((spendingItems) =>
+        spendingItems.filter((spendingItem) => spendingItem._id !== itemId)
+      );
+
+      console.log('Item deleted');
+    } catch (err) {
+      console.log(err.message);
     }
+  };
+  
+  const addSpendingItemHandler = async () => {
+    console.log('add item!')
   }
-
 
   return (
     <Container className="">
       <Stack direction="horizontal" gap="2" className="mb-4">
         <h1 className="me-auto">SpendWhere</h1>
-        <Button variant="primary">Add Spending Item</Button>
+        <Button variant="primary" onClick={addSpendingItemHandler}>Add Spending Item</Button>
       </Stack>
       <OverviewCard/>
       <div className= "mt-4" style={{display:"grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: "1rem", alignItems: "flex-start"}}>
@@ -52,9 +66,10 @@ function App() {
             description={spendingItem.description}
             amount ={spendingItem.amount}
             spendingDate={spendingItem.spendingDate}
+            onDelete={() => {deleteSpendingItemHandler(spendingItem._id)}}
           />
         )):(
-          <h1>No Items Added</h1>
+            <h3>No Records Found.</h3>
         )}
       </div>
       
