@@ -12,6 +12,7 @@ const SpendingCard = (props) => {
             <div>{props.spendingDate}</div>
             <Stack direction='horizontal' className='mt-4 justify-content-center' gap= "2">
                 <Button variant='outline-primary' className='btn-sm btn-block'>Edit</Button>
+                <Button variant='outline-danger' className='btn-sm btn-block' onClick={props.deleteAction}>Delete</Button>
             </Stack>
         </Card.Body>
     </Card>

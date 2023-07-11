@@ -9,6 +9,7 @@ const SpendingItem = (props) => {
         description = {props.description}
         amount = {props.amount}
         spendingDate = {props.spendingDate}
+        deleteAction= {props.onDelete}
     />
   )
 }
