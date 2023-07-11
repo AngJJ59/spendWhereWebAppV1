@@ -4,6 +4,7 @@ import { Button, Stack } from "react-bootstrap";
 import Container from 'react-bootstrap/Container'
 import OverviewCard from "./components/UI/OverviewCard";
 import SpendingItem from "./components/SpendingItems/SpendingItem";
+import CreateSpendingItemModal from "./components/newSpendingItem/CreateSpendingItemModal";
 
 function App() {
   const [spendingItems, setSpendingItems] = useState('')
@@ -47,15 +48,17 @@ function App() {
     }
   };
   
-  const addSpendingItemHandler = async () => {
-    console.log('add item!')
+  const openCreateSpendingItemModal = () => {
+    return(
+      <CreateSpendingItemModal />
+    )
   }
 
   return (
     <Container className="">
       <Stack direction="horizontal" gap="2" className="mb-4">
         <h1 className="me-auto">SpendWhere</h1>
-        <Button variant="primary" onClick={addSpendingItemHandler}>Add Spending Item</Button>
+        <Button variant="primary" onClick={openCreateSpendingItemModal}>Add Spending Item</Button>
       </Stack>
       <OverviewCard/>
       <div className= "mt-4" style={{display:"grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: "1rem", alignItems: "flex-start"}}>
