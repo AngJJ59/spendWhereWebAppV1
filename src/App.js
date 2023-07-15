@@ -8,6 +8,7 @@ import CreateSpendingItemModal from "./components/newSpendingItem/CreateSpending
 
 function App() {
   const [spendingItems, setSpendingItems] = useState('')
+  const [showCreateItemModal, setShowCreateItemModal] = useState(false)
 
   useEffect(() => {
     retrieveSpendingItemsFromServer()
@@ -48,17 +49,19 @@ function App() {
     }
   };
   
-  const openCreateSpendingItemModal = () => {
-    return(
-      <CreateSpendingItemModal />
-    )
+  const openCreateItemModal = () => {
+    setShowCreateItemModal(true)
+  }
+
+  const closeCreateItemModal = () => {
+    setShowCreateItemModal(false)
   }
 
   return (
     <Container className="">
       <Stack direction="horizontal" gap="2" className="mb-4">
         <h1 className="me-auto">SpendWhere</h1>
-        <Button variant="primary" onClick={openCreateSpendingItemModal}>Add Spending Item</Button>
+        <Button variant="primary" onClick={openCreateItemModal}>Add Spending Item</Button>
       </Stack>
       <OverviewCard/>
       <div className= "mt-4" style={{display:"grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: "1rem", alignItems: "flex-start"}}>
@@ -76,6 +79,7 @@ function App() {
         )}
       </div>
       
+      <CreateSpendingItemModal show={showCreateItemModal} onHide={closeCreateItemModal}/>
     </Container>
   );
 }
