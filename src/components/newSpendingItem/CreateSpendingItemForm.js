@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
 const CreateSpendingItemForm = (props) => {
+
   const [enteredInput, setEnteredInput] = useState({
     enteredTitle: '',
     enteredDescription: '',
@@ -45,7 +46,7 @@ const CreateSpendingItemForm = (props) => {
       setEnteredInput((prevState) => {
         return {
           ...prevState,
-          enteredSpendingDate: new Date(event.target.value)
+          enteredSpendingDate: new Date(event.target.value).toLocaleDateString()
         }
 
       })
@@ -57,8 +58,6 @@ const CreateSpendingItemForm = (props) => {
       const enteredData = {enteredInput}
 
       props.onSaveSpendingData(enteredData)
-      // console.log(enteredData)
-
   }
 
   return (
@@ -97,7 +96,6 @@ const CreateSpendingItemForm = (props) => {
         <Form.Control
           type='date'
           name='date'
-          placeholder='Enter date...'
           onChange={handleSpendingDateChange}
         />
       </Form.Group>
