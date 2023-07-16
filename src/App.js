@@ -4,13 +4,44 @@ import { Button, Stack } from "react-bootstrap";
 import Container from 'react-bootstrap/Container'
 import OverviewCard from "./components/UI/OverviewCard";
 import SpendingItem from "./components/SpendingItems/SpendingItem";
+import CreateSpendingItemModal from "./components/newSpendingItem/CreateSpendingItemModal";
 
 function App() {
   const [spendingItems, setSpendingItems] = useState('')
+  const [showCreateItemModal, setShowCreateItemModal] = useState(false)
 
   useEffect(() => {
     retrieveSpendingItemsFromServer()
-  }, [])
+  }, [spendingItems])
+
+  const addSpendingItemHandler = async (spendingItem) => {
+    const item = {
+      title: spendingItem.enteredInput.enteredTitle,
+      description:spendingItem.enteredInput.enteredDescription,
+      amount: spendingItem.enteredInput.enteredAmount,
+      spendingDate: spendingItem.enteredInput.enteredSpendingDate
+    }
+
+    console.log(item)
+
+    try {
+      const response = await fetch('http://localhost:5001/api/spendingItem/new', {
+        method: 'POST',
+        headers: {
+          'Content-Type' : 'application/json'
+        },
+        body : JSON.stringify(item)
+      })
+
+      if (response.ok) {
+        console.log('POST request successful!');
+      } else {
+        console.error('POST request failed.');
+      }
+    } catch(e) {
+        console.log(e.message)
+    }
+  }
 
   const retrieveSpendingItemsFromServer = async () => {
     try {
@@ -47,15 +78,19 @@ function App() {
     }
   };
   
-  const addSpendingItemHandler = async () => {
-    console.log('add item!')
+  const openCreateItemModal = () => {
+    setShowCreateItemModal(true)
+  }
+
+  const closeCreateItemModal = () => {
+    setShowCreateItemModal(false)
   }
 
   return (
     <Container className="">
       <Stack direction="horizontal" gap="2" className="mb-4">
         <h1 className="me-auto">SpendWhere</h1>
-        <Button variant="primary" onClick={addSpendingItemHandler}>Add Spending Item</Button>
+        <Button variant="primary" onClick={openCreateItemModal}>Add Spending Item</Button>
       </Stack>
       <OverviewCard/>
       <div className= "mt-4" style={{display:"grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: "1rem", alignItems: "flex-start"}}>
@@ -69,10 +104,13 @@ function App() {
             onDelete={() => {deleteSpendingItemHandler(spendingItem._id)}}
           />
         )):(
-            <h3>No Records Found.</h3>
+            <div className="d-flex align-items-center justify-content-center h-100">
+              <h3>No Records Found.</h3> 
+            </div>
         )}
       </div>
       
+      <CreateSpendingItemModal show={showCreateItemModal} onHide={closeCreateItemModal} onAddSpendingItem={addSpendingItemHandler} onItemAdded={closeCreateItemModal}/>
     </Container>
   );
 }
