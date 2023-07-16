@@ -14,6 +14,10 @@ function App() {
     retrieveSpendingItemsFromServer()
   }, [])
 
+  const addSpendingItemHandler = (spendingItem) => {
+    console.log('in app.js', spendingItem)
+  }
+
   const retrieveSpendingItemsFromServer = async () => {
     try {
       const response = await fetch('http://localhost:5001/api/allItems')
@@ -81,7 +85,7 @@ function App() {
         )}
       </div>
       
-      <CreateSpendingItemModal show={showCreateItemModal} onHide={closeCreateItemModal}/>
+      <CreateSpendingItemModal show={showCreateItemModal} onHide={closeCreateItemModal} onAddSpendingItem={addSpendingItemHandler}/>
     </Container>
   );
 }

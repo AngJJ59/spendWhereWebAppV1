@@ -1,21 +1,24 @@
 import React from 'react'
-import { Modal, Button } from 'react-bootstrap'
+import { Modal } from 'react-bootstrap'
 import CreateSpendingItemForm from './CreateSpendingItemForm'
 
 const CreateSpendingItemModal = (props) => {
+  const saveDataHandler = (inputSpendingData) => {
+    const spendingData = {
+       ...inputSpendingData
+    }
+
+    props.onAddSpendingItem(spendingData)
+  }
+
   return (
     <Modal show={props.show} onHide={props.onHide}>
       <Modal.Header closeButton>
         <Modal.Title>Add New Spending Item</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <CreateSpendingItemForm />
+        <CreateSpendingItemForm onSaveSpendingData={saveDataHandler}/>
       </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={props.onHide}>
-          Close
-        </Button>
-    </Modal.Footer>
     </Modal>
   )
 }
