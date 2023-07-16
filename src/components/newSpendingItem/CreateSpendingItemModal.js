@@ -9,6 +9,8 @@ const CreateSpendingItemModal = (props) => {
     }
 
     props.onAddSpendingItem(spendingData)
+
+    props.onItemAdded()
   }
 
   return (

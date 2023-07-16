@@ -53,7 +53,7 @@ const CreateSpendingItemForm = (props) => {
 
   const handleSubmit = (e)  => {
       e.preventDefault()
-
+      
       const enteredData = {enteredInput}
 
       props.onSaveSpendingData(enteredData)

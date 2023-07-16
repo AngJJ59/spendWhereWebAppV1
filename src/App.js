@@ -12,10 +12,35 @@ function App() {
 
   useEffect(() => {
     retrieveSpendingItemsFromServer()
-  }, [])
+  }, [spendingItems])
 
-  const addSpendingItemHandler = (spendingItem) => {
-    console.log('in app.js', spendingItem)
+  const addSpendingItemHandler = async (spendingItem) => {
+    const item = {
+      title: spendingItem.enteredInput.enteredTitle,
+      description:spendingItem.enteredInput.enteredDescription,
+      amount: spendingItem.enteredInput.enteredAmount,
+      spendingDate: spendingItem.enteredInput.enteredSpendingDate
+    }
+
+    console.log(item)
+
+    try {
+      const response = await fetch('http://localhost:5001/api/spendingItem/new', {
+        method: 'POST',
+        headers: {
+          'Content-Type' : 'application/json'
+        },
+        body : JSON.stringify(item)
+      })
+
+      if (response.ok) {
+        console.log('POST request successful!');
+      } else {
+        console.error('POST request failed.');
+      }
+    } catch(e) {
+        console.log(e.message)
+    }
   }
 
   const retrieveSpendingItemsFromServer = async () => {
@@ -85,7 +110,7 @@ function App() {
         )}
       </div>
       
-      <CreateSpendingItemModal show={showCreateItemModal} onHide={closeCreateItemModal} onAddSpendingItem={addSpendingItemHandler}/>
+      <CreateSpendingItemModal show={showCreateItemModal} onHide={closeCreateItemModal} onAddSpendingItem={addSpendingItemHandler} onItemAdded={closeCreateItemModal}/>
     </Container>
   );
 }
