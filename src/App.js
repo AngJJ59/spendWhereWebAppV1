@@ -75,7 +75,9 @@ function App() {
             onDelete={() => {deleteSpendingItemHandler(spendingItem._id)}}
           />
         )):(
-            <h3>No Records Found.</h3>
+            <div className="d-flex align-items-center justify-content-center h-100">
+              <h3>No Records Found.</h3> 
+            </div>
         )}
       </div>
       
